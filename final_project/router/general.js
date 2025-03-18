@@ -77,6 +77,19 @@ public_users.get('/author/:author', function (req, res) {
   }
 });
 
+public_users.get('/axios/author/:author', async function (req, res) {
+  try {
+    const author = req.params.author;
+
+    // Simulate fetching book details via Axios
+    const response = await axios.get(`http://localhost:8080/author/${author}`);
+
+    return res.status(200).json(response.data);
+  } catch (error) {
+    return res.status(500).json({ message: "Error fetching the given author", error: error.message });
+  }
+});
+
 // Get all books based on title
 public_users.get('/title/:title', function (req, res) {
   let title = req.params.title;
