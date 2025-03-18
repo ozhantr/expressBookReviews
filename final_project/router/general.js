@@ -108,6 +108,19 @@ public_users.get('/title/:title', function (req, res) {
   }
 });
 
+public_users.get('/axios/title/:title', async function (req, res) {
+  try {
+    const title = req.params.title;
+
+    // Simulate fetching book details via Axios
+    const response = await axios.get(`http://localhost:8080/title/${title}`);
+
+    return res.status(200).json(response.data);
+  } catch (error) {
+    return res.status(500).json({ message: "Error fetching the given title", error: error.message });
+  }
+});
+
 //  Get book review
 public_users.get('/review/:isbn', function (req, res) {
   let isbn = req.params.isbn;
