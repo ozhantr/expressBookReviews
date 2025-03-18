@@ -4,7 +4,6 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
-
 public_users.post("/register", (req, res) => {
   const { username, password } = req.body;
 
@@ -21,9 +20,17 @@ public_users.post("/register", (req, res) => {
 });
 
 // Get the book list available in the shop
-public_users.get('/',function (req, res) {
-  return res.status(200).send(books);
-  // return res.status(200).send(JSON.stringify(books, null, 4));
+public_users.get('/', async function (req, res) {
+  try {
+    // Simulating fetching books with async-await
+    const response = await new Promise((resolve) => {
+      setTimeout(() => resolve(books), 500);
+    });
+
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({ message: "Error fetching books", error: error.message });
+  }
 });
 
 // Get book details based on ISBN
